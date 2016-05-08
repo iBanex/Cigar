@@ -538,6 +538,14 @@
         }
     }
 
+	function componentToHex(c) {
+		var hex = c.toString(16);
+		return hex.length == 1 ? "0" + hex : hex;
+	}
+
+	function rgbToHex(r, g, b) {
+		return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+	}
 
     function addChat(view, offset) {
         function getString() {
@@ -566,11 +574,8 @@
         var r = view.getUint8(offset++),
             g = view.getUint8(offset++),
             b = view.getUint8(offset++),
-            color = (r << 16 | g << 8 | b).toString(16);
-        while (color.length > 6) {
-            color = '0' + color;
-        }
-        color = '#' + color;
+			color = rgbToHex(r,g,b);
+
         chatBoard.push({
             "name": getString(),
             "color": color,
